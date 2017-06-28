@@ -1,0 +1,48 @@
+#! /bin/bash
+
+#Dane są dwa argumenty skryptu: dowolny tekst T oraz całkowita dodatnia liczba U. Wypisz login każdego użytkownika z pliku /etc/passwd, którego uid to U lub którego katalog domowy to T. wypisz liczbę takich użytkowników. Awk lub potok cat|awk.
+
+if  [ $# -ne 2 ];then
+exit 1
+fi
+
+cat /etc/passwd | awk 'BEGIN { FS = ":" } 
+{ if ( $3 == '$2'  || $6 == "'$1'" )
+{validUsers++; print "Login: ", $1}
+};
+END { print "Liczba trafionych użytkowników: ", validUsers }' 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+find $1 "(" -type f -o -type d ")" -printf "%y %f\n" | sort -k2 | while read typ nazwa  
+do
+	if [ $typ = "f" ];then
+		zm=`echo -n $nazwa | wc -c`
+		echo $nazwa $zm 
+	elif [ $typ = "d" ];then
+		lpu=`ls -lA | wc -l`
+		lpu2=`ls -l | wc -l`
+		lpu3=$[ $lpu-$lpu2 ]
+		echo $nazwa $lpu3 
+	fi
+
+
+done

@@ -1,0 +1,26 @@
+#! /bin/bash
+
+#Dane jest drzewo katalogowe. Dla każdego katalogu w drzewie wypisac jego nazwe oraz liczbe plików ukrytych, a dla kazdego pliku regularnego nazwe oraz dlugosc ostatniego czlonu nazwy. Wyniki sortowanie wg nazwy
+
+if  [ $# -ne 1 ];then
+exit 1
+fi
+
+if [ ! -d $1 ]; then
+exit 2
+fi
+
+find $1 "(" -type f -o -type d ")" -printf "%y %f\n" | sort -k2 | while read typ nazwa  
+do
+	if [ $typ = "f" ];then
+		zm=`echo -n $nazwa | wc -c`
+		echo $nazwa $zm 
+	elif [ $typ = "d" ];then
+		lpu=`ls -lA | wc -l`
+		lpu2=`ls -l | wc -l`
+		lpu3=$[ $lpu-$lpu2 ]
+		echo $nazwa $lpu3 
+	fi
+
+
+done

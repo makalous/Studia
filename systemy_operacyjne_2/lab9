@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+
+if( @ARGV != 1 ) { die "Zla liczba argumentow.";  }
+
+if( ! -f $ARGV[0] ) {die "Argument nie jest plikiem tekstowym.";  }
+
+open file, $ARGV[0] || die "Nie mozna otworzyc.";
+
+#Dany jest plik regularny. Dla kazdej linii zawierajacej tylko imiona i nazwisko wypisac na ekran wersje tej linii z inicjalami. Nie wypisywac pozostalych linii pliku. 
+$kropka = ".";
+$pusty = "";
+$spacja = " ";
+$rego = "([A-Z][a-z]+)";
+while (<file>)
+{ 
+$znajda = $_;
+$znajdaa = $_;
+@lista = split(" ", $znajda);
+$ilosc = @lista;
+$boole=0;
+#$wynik = $znajda =~ m/$rego$spacja$rego($spacja$rego)*/g;
+$wynik = $znajda =~ m/^(($rego$spacja)+)$rego$/g;
+if ($wynik==1)
+	{
+		for ($i=0; $i<$ilosc; $i=$i+1)
+		{	
+			$wynik2=$lista[$i] =~ m/[^a-zA-Z]/g;
+			if ($wynik2==1)
+			{
+				$boole=1;
+			}
+		}
+		if ($boole==1) {next;}
+		for ($i=0; $i<$ilosc; $i++)
+		{
+			$lista[$i] =~ s/[a-z]+/$pusty/g;
+			print $lista[$i].$kropka;
+		}
+		print "\n";
+
+	}
+
+}
+
+#   ((wyraz )conajmnieraz)wyraz

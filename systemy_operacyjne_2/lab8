@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+#W zadanym drzewie katalogów znaleźć pliki regularne o rozmiarze mniejszym niż 100B do których właściciel nie ma prawa zapisu a właściciel grupowy ma prawo wykonania. Wyniki wyslać na ekran i do pliku zadanego.
+# stat - [2] - typ i uprawnienia [7]-size
+use File::Find;
+
+
+if ( @ARGV != 2 ) {print "Podano złą liczbę argumentów\n"; exit 1; }
+if ( ! -d $ARGV[0] ) { print "Argument nie jest katalogiem\n";  exit 2; }
+$dir = $ARGV[0];
+
+open (UCHWYT, ">$ARGV[1]") or die "Nie udalo sie otworzyc pliku: $!";
+
+find( \&funkcja_przetwarzania , $ARGV[0] );
+
+sub funkcja_przetwarzania()
+{ 
+	if (-f $_) 
+	{
+		my $rozmiar = (stat($_))[7];
+		my $uprawnienia = (stat(_))[2];
+		if (($rozmiar)<100) 
+		{
+			if (($uprawnienia & 010) != 0 )
+				{
+					if ( ($uprawnienia & 0400)== 0 )
+						{	
+							print "$_\n";
+							print UCHWYT "$_\n";
+							
+						}
+				}
+		}			
+	}
+}
+close UCHWYT;
+

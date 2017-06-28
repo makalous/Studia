@@ -1,0 +1,11 @@
+#! /bin/bash
+# W zadanym drzewie katalogów wypisać numery i-węzłów katalogów, których właściciel ma prawo odczytu i które jednocześnie są puste lub mają co najmniej 2 bezpośrednie podkatalogi. Ograniczyć się do 3 poziomów drzewa. 
+if [ "$#" -ne 1 ]; then
+exit 1
+fi
+
+if [ ! -d $1 ]; then
+exit 2
+fi
+
+find $1 -maxdepth 3 -type d -perm -u=r "(" -links +3 -o -empty ")" -printf "%i \n"

@@ -1,0 +1,43 @@
+#!/usr/bin/perl 
+#W zadanym katalogu usunac wszystkie niepoprawne, wiszace linki symbliczne, a poprawne zamienic na linki twarde.
+use Cwd;
+use Cwd 'abs_path';
+
+if ( @ARGV != 1 )
+{
+die "Zla liczba argumentow\n";
+}
+
+if (! -d $ARGV[0] )
+{
+die "Podany parametr nie jest katalogiem\n";
+}
+
+$per=$ARGV[0];
+opendir $KAT, $ARGV[0] or die "Nie odczytano katalogu \n";
+@tab = readdir $KAT;
+closedir($KAT);
+$ahp = abs_path("$per");
+
+for $plik(@tab)
+{
+	next if ($plik eq "." or $plik eq "..");
+	$name = $per . '/' . $plik;
+	$sciezka = abs_path("$per/$plik");
+	if ( -l $name )
+	{
+		if ( -e $sciezka )
+		{ 
+			#print "$sciezka\n";
+			unlink $sciezka or die "$!\n";
+			link $sciezka, $ahp;
+		}
+		else
+		{
+			#print "$sciezka\n";
+			unlink $sciezka or die "Nie udało sie usunac niepoprawnego symlinka: $!\n";
+		}
+		
+	}
+}
+

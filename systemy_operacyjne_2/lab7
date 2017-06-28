@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+# "Połączyć" w jeden pliki regularne z listy w zadanym pliku. Kolejnosć łączenia według listy. Treść każdego pliku poprzedzić nagłówkiem z jego nazwą. Wyniki wylistować na ekran. 
+
+if(@ARGV!=1){print "Zla liczba argumentow!\n"; exit 1;}
+if(! -f $ARGV[0]) {print "Zly typ pliku\n"; exit 2;}
+$dir = UCHWYT;
+open UCHWYT, $ARGV[0] or die "Nie udalo sie otworzyc pliku: $!";
+
+@tablica=<UCHWYT>;
+$ilosc_elem = @tablica;
+
+for ($i = 0; $i < $ilosc_elem; $i++)
+{
+	chomp $tablica[$i];
+	if ( -f $tablica[$i]) 
+	{
+		print "$tablica[$i]\n";
+		open(my $fh, "<", "$tablica[$i]") or die "Can't open < $tablica[$i]: $!";
+		while (my $row = <$fh>) 
+		{
+  			print "$row";
+		}
+	}
+}
+close UCHWYT;

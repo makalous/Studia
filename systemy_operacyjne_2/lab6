@@ -1,0 +1,23 @@
+#! /bin/bash
+
+#Wypisać zawartość zadanego pliku tekstowego (regularnego), zmieniając odnośniki w postaci http://nazwa_domenowa lub https://nazwa_domenowa na poprawne odnośniki <a> HTML-a. Nazwa domenowa może mieć dowolnie dużo członów. Odnośnik może wystąpić wielokrotnie w tej samej linii. Zmieniać tylko odnośniki.
+
+if  [ $# -ne 1 ];then
+exit 1
+fi
+
+gawk 'BEGIN {}
+{ 
+	for (i=1; i<=NR; i++)
+		{
+			ma = match($i, / http(s)?:\/\/ /)
+			if (ma!=0)
+			{
+				a = gensub ( / (http(s)?:\/\/), (.+) / , "<a href = "\\1\\2">\\2</a>", "g", $i)
+				print a
+			{
+		}
+	}
+};
+END {}' $1
+

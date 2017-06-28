@@ -1,0 +1,35 @@
+#! /bin/bash
+
+
+#Usuwanie  z  zadanego  katalogu  (pierwszy  argument  skryptu)  wszystkich  plików,  których  
+#nazwy   pokrywają się
+#  z   nazwami   w   drugim   katalogu   (drugi   argument).   Nie   usuwaj   
+#podkatalogów.   Nie   usuwaj   również
+#   plików   o   nazwach   pokrywających   się
+#   z   nazwami   
+#podkatalogów w drugim katalogu. 
+
+
+# ile argumentow
+if [ "$#" -ne 2 ]; 
+then 
+exit 1
+fi
+#czy istnieja katalogi
+if [ ! -d $1 ] || [ ! -d $2 ];
+then
+exit 1
+fi
+
+for file in `ls -a $1`; 
+do
+	if [ ! -d $1/$file ]; then
+			
+			if [ -e $2/$file ] && [ ! -d $2/$file ];
+			then
+				
+				rm -rf $1/$file
+			fi
+	fi
+
+done

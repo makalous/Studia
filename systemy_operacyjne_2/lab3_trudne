@@ -1,0 +1,16 @@
+#! /bin/bash
+# W zadanych N drzewach katalogowych znależć pliki regularne <modyfikowane pomiędzy jedną godziną, a pięcioma godzinami wstecz> do których właściciel nie ma prawa wykonywania, a ktoś inny (grupa,others) ma co najmniej prawo odczytu. Znalezione pliki posortować. Ograniczyć się do 3 poziomów katalogów. Find+exec
+
+
+
+if [ "$#" -ne 1 ]; then
+exit 1
+fi
+
+if [ ! -d $1 ]; then
+exit 2
+fi
+
+find $1 -maxdepth 3 -type f -perm /g=r,o=r ! -perm -u=x "(" -mmin -300 -a -mmin +60 ")" | sort
+
+

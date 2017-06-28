@@ -1,0 +1,28 @@
+#! /bin/bash
+
+#wypisac na ekran wszystkie linki symb. z danego katalogu (1 arg.)
+#ktore wskazują na zadane miejsce (sciezke) w systemie plików (2 arg)
+#zadane miejsce moze byc poza katalogiem
+
+
+if [ "$#" -ne 2 ]; then
+exit 1
+fi
+
+if [ ! -d $1 ]; then
+exit 2
+fi
+
+link=`readlink -m $2`
+
+for file in `ls -A $1`; do
+
+	if [ -L $1/$file ]; then
+		link2=`readlink -m $1/$file`
+		if [ "$link" = "$link2" ]; then
+			echo "Dowiazanie symboliczne $1/$file"
+		fi
+
+	fi
+	
+done
