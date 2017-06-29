@@ -57,7 +57,7 @@ insert into denaci
 values (94110816765,'Ryszard','Butwock','M','Lekarz','1994-11-08','2015-08-09');
 insert into denaci
 (pesel_denata,imie_denata,nazwisko_denata,plec_denata,praca_denata,data_ur,data_sm)
-values (87060789109,'Gra¿yna','Konowal','K','Piekarz','1987-06-07','2014-11-19');
+values (87060789109,'GraÂ¿yna','Konowal','K','Piekarz','1987-06-07','2014-11-19');
 insert into denaci
 (pesel_denata,imie_denata,nazwisko_denata,plec_denata,praca_denata,data_ur,data_sm)
 values (43051598654,'Michal','Bialek','M','Programista','1943-05-15','2014-12-09');
@@ -177,7 +177,7 @@ BEGIN
     akcja:='WSTAWIENIE';
   END IF;
   IF DELETING THEN
-    akcja:='USUNIÊCIE';
+    akcja:='USUNIÃŠCIE';
   END IF;
   INSERT INTO zmiana_sprawy VALUES( SYSDATE, akcja );
 END;
