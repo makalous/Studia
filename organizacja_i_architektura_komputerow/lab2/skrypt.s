@@ -1,6 +1,5 @@
 .align 32
 .code32
-#https://drive.google.com/drive/folders/0B7ARWaVIESwLZ2xSamozX3hzR2s
 #x/4wx
 .data
 liczba1: .long 0x10304008, 0x701100ff, 0x45100020, 0x18570030
